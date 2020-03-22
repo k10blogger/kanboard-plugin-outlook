@@ -6,7 +6,7 @@
     <?= $this->form->label(t('Channel/Group/User (Optional)'), 'outlook_webhook_channel') ?>
     <?= $this->form->text('outlook_webhook_channel', $values, array(), array('placeholder="@username"')) ?>
 
-    <p class="form-help"><a href="https://github.com/kanboard/plugin-outlook#configuration" target="_blank"><?= t('Help on Outlook integration') ?></a></p>
+    <p class="form-help"><a href="https://github.com/k10blogger/kanboard-plugin-outlook#configuration" target="_blank"><?= t('Help on Outlook integration') ?></a></p>
 
     <div class="form-actions">
         <input type="submit" value="<?= t('Save') ?>" class="btn btn-blue"/>

@@ -45,7 +45,7 @@ class Plugin extends Base
 
     public function getPluginHomepage()
     {
-        return 'https://github.com/kanboard-plugin-outlook';
+        return 'https://github.com/k10blogger/kanboard-plugin-outlook';
     }
 
     public function getCompatibleVersion()
