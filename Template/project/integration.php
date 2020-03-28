@@ -5,7 +5,8 @@
 
     <?= $this->form->label(t('Channel/Group/User (Optional)'), 'outlook_webhook_channel') ?>
     <?= $this->form->text('outlook_webhook_channel', $values, array(), array('placeholder="#channel"')) ?>
-
+    <?= $this->form->checkboxes('select_event',$this->eventManager->getAll(),array())
+	?>
     <p class="form-help"><a href="https://github.com/k10blogger/kanboard-plugin-outlook#configuration" target="_blank"><?= t('Help on Outlook integration') ?></a></p>
 
     <div class="form-actions">

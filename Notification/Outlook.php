@@ -94,8 +94,19 @@ class Outlook extends Base implements NotificationInterface
             'enableBodyToggling' => true,
             'summary' => 'Kanboard Event '.$eventName.' created by '.($this->userSession->isLogged() ? $this->userSession->getUsername() : NULL).' project '.$eventData["task"]["project_name"].' ', //Subject
             'title' => 'Kanban Event for '.$eventData["task"]["project_name"].' '.' by '.($this->userSession->isLogged() ? $this->userSession->getUsername() : NULL), //Title Card
-            'themeColor' => '0078D7'
-        );
+            'themeColor' => '0078D7',
+			'sections' => array(
+            'potentialAction' => array(
+					'@context' => 'http://schema.org',
+                    '@type' => 'OpenUri',
+                    'name' => 'View Task',
+					'targets' => array(
+							'os' => 'default',
+							'uri' => $this->helper->url->to('TaskViewController', 'show', array('task_id' => $eventData['task']['id'], 'project_id' => $project['id']), '', true)
+							)
+					)
+					)
+			);
     }
 
     /**
