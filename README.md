@@ -2,6 +2,7 @@ Outlook plugin for Kanboard
 =========================
 
 Receive Kanboard notifications on Outlook.
+Would like to thank Bombardier Transportation India Pvt Ltd. for allowing me to share this with the world and let me work on it during friday office hours :). 
 
 Author
 ------
