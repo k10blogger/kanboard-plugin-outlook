@@ -31,18 +31,19 @@ Configuration
 
 Firstly, you have to generate a new webhook url in Outlook (**Configured Integrations > Incoming Webhook**) [from here](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using).
 
-You can define only one webhook url (**Settings > Integrations > Outlook**) and override the channel for each project and user.
+You can define only one webhook url (**Settings > Integrations > Outlook**).
+To redirect to specific channel or user a new webhook url is needed for each project and user separately. Only one of the webhook url can be used.
 
 ### Receive individual user notifications
 
 - Go to your user profile then choose **Integrations > Outlook**
-- Copy and paste the webhook url from Outlook or leave it blank if you want to use the global webhook url
+- Copy and paste the webhook url from Outlook
 - Enable Outlook in your user notifications **Notifications > Outlook**
 
-### Receive project notifications to a room
+### Receive project notifications
 
 - Go to the project settings then choose **Integrations > Outlook**
-- Copy and paste the webhook url from Outlook or leave it blank if you want to use the global webhook url
+- Copy and paste the webhook url from Outlook
 - Enable Outlook in your project notifications **Notifications > Outlook**
 
 ## Troubleshooting

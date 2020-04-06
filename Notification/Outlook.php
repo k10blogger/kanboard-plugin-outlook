@@ -25,8 +25,7 @@ class Outlook extends Base implements NotificationInterface
     public function notifyUser(array $user, $eventName, array $eventData)
     {
         $webhook = $this->userMetadataModel->get($user['id'], 'outlook_webhook_url', $this->configModel->get('outlook_webhook_url'));
-        $channel = $this->userMetadataModel->get($user['id'], 'outlook_webhook_channel');
-
+        $channel = $this->userMetadataModel->get($user['id'], 'outlook_webhook_channel', $this->configModel->get('outlook_webhook_channel'));
         if (! empty($webhook)) {
             if ($eventName === TaskModel::EVENT_OVERDUE) {
                 foreach ($eventData['tasks'] as $task) {
@@ -53,7 +52,6 @@ class Outlook extends Base implements NotificationInterface
     {
         $webhook = $this->projectMetadataModel->get($project['id'], 'outlook_webhook_url', $this->configModel->get('outlook_webhook_url'));
         $channel = $this->projectMetadataModel->get($project['id'], 'outlook_webhook_channel');
-
         if (! empty($webhook)) {
             $this->sendMessage($webhook, $channel, $project, $eventName, $eventData);
         }
@@ -77,36 +75,26 @@ class Outlook extends Base implements NotificationInterface
             $title = $this->notificationModel->getTitleWithoutAuthor($eventName, $eventData);
         }
 
-        $message = '*['.$project['name'].']* ';
+        $message = '**'.$project['name'].'** ';
         $message .= $title;
-        $message .= ' ('.$eventData['task']['title'].')';
+        $message .= ' __'.$eventData['task']['title'].'__';
 
         if ($this->configModel->get('application_url') !== '') {
-            $message .= ' - < ';
+            $message .= ' ['.t('view the task on Kanboard').']';
+            $message .= '(';
             $message .= $this->helper->url->to('TaskViewController', 'show', array('task_id' => $eventData['task']['id'], 'project_id' => $project['id']), '', true);
-            $message .= ' |'.t('view the task on Kanboard').'>';
+            $message .= ') ';
         }
-
+        
         return array(
             'version' => '1.0',
             'text' => $message, //Body
             'hideOriginalBody' => false,
             'enableBodyToggling' => true,
-            'summary' => 'Kanboard Event '.$eventName.' created by '.($this->userSession->isLogged() ? $this->userSession->getUsername() : NULL).' project '.$eventData["task"]["project_name"].' ', //Subject
-            'title' => 'Kanban Event for '.$eventData["task"]["project_name"].' '.' by '.($this->userSession->isLogged() ? $this->userSession->getUsername() : NULL), //Title Card
-            'themeColor' => '0078D7',
-			'sections' => array(
-            'potentialAction' => array(
-					'@context' => 'http://schema.org',
-                    '@type' => 'OpenUri',
-                    'name' => 'View Task',
-					'targets' => array(
-							'os' => 'default',
-							'uri' => $this->helper->url->to('TaskViewController', 'show', array('task_id' => $eventData['task']['id'], 'project_id' => $project['id']), '', true)
-							)
-					)
-					)
-			);
+            'summary' => $title, //Subject
+            'title' => $title, //Title Card
+            'themeColor' => '0078D7'
+            );
     }
 
     /**
