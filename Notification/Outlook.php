@@ -124,7 +124,33 @@ class Outlook extends Base implements NotificationInterface
                     )
             ) //end of actions
         ); //end of myobj_new
-        return $myobj_new;
+        $myobj_messagecard = array(
+            'version' => '1.0',
+            'type' => 'MessageCard',
+            'text' => $message, //Body
+            'hideOriginalBody' => false,
+            'enableBodyToggling' => true,
+            'summary' => $title, //Subject
+            'title' => $title, //Title Card
+            'themeColor' => '0078D7',
+            'sections' => array(
+                    array(
+                        'facts' => array(
+                            array(
+                                'name' => 'Some Name',
+                                'value' => 'Some Value'
+                            ),
+                            array(
+                                'name' => 'Other Text',
+                                'value' => 'Other Text'
+                            ),
+                            ),//end of facts inner
+                        'text' => 'Some text abvoe the facts'
+                        )//end of facts outer
+            ) //end of sections
+            
+        ); //end of myobj_messagecard
+        return $myobj_messagecard;
     }
 
     /**
