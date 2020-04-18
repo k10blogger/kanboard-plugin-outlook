@@ -147,7 +147,19 @@ class Outlook extends Base implements NotificationInterface
                             ),//end of facts inner
                         'text' => 'Some text abvoe the facts'
                         )//end of facts outer
-            ) //end of sections
+            ), //end of sections
+            'potentialAction' => array(
+                    array(
+                        '@type' => 'OpenUri',
+                        'name' => 'View in Kanboard',
+                        'targets' => array(
+                            array(
+                                'os' => 'defaults',
+                                'uri' => $this->helper->url->to('TaskViewController', 'show', array('task_id' => $eventData['task']['id'], 'project_id' => $project['id']), '', true)
+                            )
+                        )//end of targets
+                    )
+            )// end of potentialAction
             
         ); //end of myobj_messagecard
         return $myobj_messagecard;
