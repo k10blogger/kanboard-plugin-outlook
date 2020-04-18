@@ -86,7 +86,7 @@ class Outlook extends Base implements NotificationInterface
             $message .= ') ';
         }
         
-        return array(
+        $myobj_original = array(
             'version' => '1.0',
             'text' => $message, //Body
             'hideOriginalBody' => false,
@@ -95,6 +95,36 @@ class Outlook extends Base implements NotificationInterface
             'title' => $title, //Title Card
             'themeColor' => '0078D7'
             );
+        $myobj_new = array(
+            'version' => '1.0',
+            'type' => 'AdaptiveCard',
+            'text' => $message, //Body
+            'hideOriginalBody' => false,
+            'enableBodyToggling' => true,
+            'summary' => $title, //Subject
+            'title' => $title, //Title Card
+            'themeColor' => '0078D7',
+            'body' => array(
+                    array(
+                        'type' => 'TextBlock',
+                        'text' => 'Test message to check json creating'
+                    ),
+                    array(
+                        'type' => 'Input.Text',
+                        'id' => 'sampleInput',
+                        'placeholder' => 'Some Sample Text as Place Holder'
+                    )
+            ), //end of body
+            'actions' => array(
+                    array(
+                    'type' => 'Action.Http',
+                    'title' => 'Say hello',
+                    'method' => 'GET',
+                    'url' => 'https://google.com'
+                    )
+            ) //end of actions
+        ); //end of myobj_new
+        return $myobj_new;
     }
 
     /**
