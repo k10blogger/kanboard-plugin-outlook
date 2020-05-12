@@ -124,6 +124,110 @@ class Outlook extends Base implements NotificationInterface
                     )
             ) //end of actions
         ); //end of myobj_new
+        /*
+           task
+            id
+            title
+            description
+            date_creation
+            date_modification
+            date_due
+            date_started
+            project_name
+            assignee_name
+            creator_name
+           subtask
+            id
+            title
+            time_spent
+            time_estimated
+            username
+            name
+            is_timer_started
+        */
+        $array_task_keys = array("id","title","description","date_creation","date_modification","date_due","date_started","project_name","assignee_name","creator_name");
+        $array_subtask_keys = array("id","title","time_spent","time_estimated","username","name","is_timer_started");
+        $inner_sections_array = array();
+        $outer_sections_array = array();
+        if (array_key_exists("task",$eventData)) {
+            $task_facts_value = array();
+            foreach($eventData["task"] as $key => $value) {
+                $base_value['name'] = $key;
+                $base_value['value'] = $value;
+                array_push($task_facts_value,$base_value);
+            }
+            $inner_sections_array['facts'] = $task_facts_value;
+            $inner_sections_array['text'] = "Task Information can be found below";
+            array_push($outer_sections_array,$inner_sections_array);
+        }
+        if (array_key_exists("subtask",$eventData)) {
+            $subtask_facts_value = array();
+            foreach($eventData["subtask"] as $key => $value) {
+                $base_value['name'] = $key;
+                $base_value['value'] = $value;
+                array_push($subtask_facts_value,$base_value);
+            }
+            $inner_sections_array['facts'] = $subtask_facts_value;
+            $inner_sections_array['text'] = "Subtask Information can be found below";
+            array_push($outer_sections_array,$inner_sections_array);
+        }
+        if (array_key_exists("changes",$eventData)) {
+            $changes_facts_value = array();
+            foreach($eventData["changes"] as $key => $value) {
+                $base_value['name'] = $key;
+                $base_value['value'] = $value;
+                array_push($changes_facts_value,$base_value);
+            }
+            $inner_sections_array['facts'] = $changes_facts_value;
+            $inner_sections_array['text'] = "Changes can be found below";
+            array_push($outer_sections_array,$inner_sections_array);
+        }
+        if (array_key_exists("file",$eventData)) {
+            $file_facts_value = array();
+            foreach($eventData["file"] as $key => $value) {
+                $base_value['name'] = $key;
+                $base_value['value'] = $value;
+                array_push($file_facts_value,$base_value);
+            }
+            $inner_sections_array['facts'] = $file_facts_value;
+            $inner_sections_array['text'] = "File Upload Information can be found below";
+            array_push($outer_sections_array,$inner_sections_array);
+        }
+        if (array_key_exists("task_link",$eventData)) {
+            $task_link_facts_value = array();
+            foreach($eventData["task_link"] as $key => $value) {
+                $base_value['name'] = $key;
+                $base_value['value'] = $value;
+                array_push($task_link_facts_value,$base_value);
+            }
+            $inner_sections_array['facts'] = $task_link_facts_value;
+            $inner_sections_array['text'] = "Task Link Information can be found below";
+            array_push($outer_sections_array,$inner_sections_array);
+        }
+        $mymessagecard = array(
+            'version' => '1.0',
+            'type' => 'MessageCard',
+            'text' => $message, //Body
+            'hideOriginalBody' => false,
+            'enableBodyToggling' => true,
+            'summary' => $title, //Subject
+            'title' => $title, //Title Card
+            'themeColor' => '0078D7',
+            'sections' => $outer_sections_array, //end of sections
+            'potentialAction' => array(
+                    array(
+                        '@type' => 'OpenUri',
+                        'name' => 'View in Kanboard',
+                        'targets' => array(
+                            array(
+                                'os' => 'defaults',
+                                'uri' => $this->helper->url->to('TaskViewController', 'show', array('task_id' => $eventData['task']['id'], 'project_id' => $project['id']), '', true)
+                            )
+                        )//end of targets
+                    )
+            )// end of potentialAction
+            
+        ); //end of myobj_messagecard
         $myobj_messagecard = array(
             'version' => '1.0',
             'type' => 'MessageCard',
@@ -162,7 +266,7 @@ class Outlook extends Base implements NotificationInterface
             )// end of potentialAction
             
         ); //end of myobj_messagecard
-        return $myobj_messagecard;
+        return $mymessagecard;
     }
 
     /**
