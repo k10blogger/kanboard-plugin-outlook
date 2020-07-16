@@ -50,3 +50,15 @@ To redirect to specific channel or user a new webhook url is needed for each pro
 
 - Enable the debug mode
 - All connection errors with the Outlook API are recorded in the log files `data/debug.log` or syslog
+
+## Contributing
+
+- If any issues or any addition please feel free to log the issue here.
+- If any suggestion how it can be improved feel free to add that as well.
+
+How it Looks
+-------------
+Following are some snapshots of the email that it can send.
+
+![An Example of Email - Top](https://user-images.githubusercontent.com/4973182/81728391-022ad700-94a8-11ea-8135-a86846e323b3.png)
+![An Example of Email - Botton](https://user-images.githubusercontent.com/4973182/81728506-2f778500-94a8-11ea-9db7-c3e4313a0e90.png)
